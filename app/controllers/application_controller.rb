@@ -7,5 +7,7 @@ class ApplicationController < ActionController::Base
   # Retrieve the current cart based on the session
   def current_cart
     Cart.find(session[:cart_id]) if session[:cart_id]
+  rescue ActiveRecord::RecordNotFound
+    session[:cart_id] = nil # Clear invalid cart ID from session
   end
 end
