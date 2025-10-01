@@ -1,0 +1,18 @@
+<h1>Item</h1>
+
+<div id="item">
+    <div class="border-box padding margin">
+      <div class="item-name">
+        <%= @item.name %>
+      </div>
+
+      <div class="item-description">
+        <p><%= @item.description %></p>
+      </div>
+
+      <div class="item-price">
+        <%= number_to_currency @item.selling_price %>
+        <span class="item-actual-price"><%= number_to_currency @item.actual_price %></span>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<h1>Categories</h1>
+
+<div id="categories">
+  <% @categories.each do |category| %>
+    <div class="border-box padding margin">
+      <div class="category-name">
+        <%= category.name %>
+      </div>
+
+      <div class="category-description">
+        <p><%= truncate category.description %></p>
+      </div>
+
+      <div>
+        <%= link_to 'View Items', category_items_path(category), class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% end %>
+</div>

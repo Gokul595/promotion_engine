@@ -1,0 +1,11 @@
+.item-name {
+    font-weight: bold;
+}
+
+.item-price {
+    color: green;
+
+    .item-actual-price {
+        text-decoration: line-through;
+    }
+}

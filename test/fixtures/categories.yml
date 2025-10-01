@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+t_shirt:
+  name: T-Shirts
+  description: Casual and comfortable t-shirts for everyday wear.
+
+hoodie:
+  name: Hoodies
+  description: Warm and stylish hoodies for all seasons.

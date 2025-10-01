@@ -1,0 +1,12 @@
+.border-box {
+    box-sizing: border-box;
+    border: #666666 solid 1px;
+}
+
+.padding {
+    padding: 10px;
+}
+
+.margin {
+    margin: 10px;
+}

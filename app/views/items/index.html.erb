@@ -1,0 +1,20 @@
+<h1>Items</h1>
+
+<div id="items">
+  <% @items.each do |item| %>
+    <div class="border-box padding margin">
+      <div class="item-name">
+        <%= item.name %>
+      </div>
+
+      <div class="item-price">
+        <%= number_to_currency item.selling_price %>
+        <span class="item-actual-price"><%= number_to_currency item.actual_price %></span>
+      </div>
+
+      <div>
+        <%= link_to 'View Details', item_path(item), class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% end %>
+</div>
