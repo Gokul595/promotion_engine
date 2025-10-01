@@ -4,7 +4,7 @@ class Cart < ApplicationRecord
 
   # Logic to apply promotions to the cart
   # This could involve checking the items in the cart against active promotions
-  # and adjusting prices or adding discounts accordingly.
+  # and adding discounts accordingly.
   def apply_promotions
     promotions = Promotion.active.includes(:items, :categories) # Fetch all active promotions
     cart_items = self.cart_items.includes(item: :category)
