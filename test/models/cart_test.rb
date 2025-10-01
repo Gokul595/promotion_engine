@@ -10,7 +10,6 @@ class CartTest < ActiveSupport::TestCase
 
     cart_item = cart.cart_items.find_by(item: item)
     cart_item.update(quantity: 2) # Add 2 quantities of the item
-    cart.apply_promotions
 
     cart_item.reload
     expected_discount = 4.5 # per item price is $15, 15% of 2 items is $4.5
@@ -27,7 +26,6 @@ class CartTest < ActiveSupport::TestCase
 
     cart_item = cart.cart_items.find_by(item: item)
     cart_item.update(quantity: 3) # Add 3 quantities of the item
-    cart.apply_promotions
 
     cart_item.reload
     expected_discount = 30 # per item price is $40, $10 off on 3 items is $30
@@ -44,7 +42,6 @@ class CartTest < ActiveSupport::TestCase
 
     cart_item = cart.cart_items.find_by(item: item)
     cart_item.update(quantity: 6) # Add 6 quantities of the item
-    cart.apply_promotions
 
     cart_item.reload
     expected_discount = item.selling_price * 2 # 2 items free
@@ -61,7 +58,6 @@ class CartTest < ActiveSupport::TestCase
 
     cart_item = cart.cart_items.find_by(item: item)
     cart_item.update(quantity: 4) # Add 4 quantities of the item
-    cart.apply_promotions
 
     cart_item.reload
     expected_discount = item.selling_price * 50 / 100 # 50% off on 1 item
@@ -77,8 +73,6 @@ class CartTest < ActiveSupport::TestCase
 
     cart_item = cart.cart_items.find_by(item: item)
     cart_item.update(quantity: 2) # Add 2 quantities of the item
-    cart.apply_promotions
-
     cart_item.reload
 
     assert_equal 0, cart_item.discount_value, "Inactive promotion should not be applied"
@@ -94,7 +88,6 @@ class CartTest < ActiveSupport::TestCase
 
     cart_item = cart.cart_items.find_by(item: item)
     cart_item.update(quantity: 2) # Add 2 quantities of the item
-    cart.apply_promotions
 
     cart_item.reload
     expected_percentage_discount = 4.5 # 15% of $30 = $4.5

@@ -1,14 +1,16 @@
 class CartItem < ApplicationRecord
   belongs_to :cart
   belongs_to :item
-  belongs_to :promotion
+  belongs_to :promotion, optional: true
 
   validates :item_id, uniqueness: { scope: :cart_id, message: "is already in the cart" }
 
   after_commit :apply_promotions, on: [:create, :destroy]
+  after_commit :apply_promotions, on: [:update], if: -> { saved_change_to_quantity? }
 
+  # Recalculate promotions when cart changes
   def apply_promotions
-    cart.apply_promotions # Reapply promotions to ensure discounts are up-to-date
+    cart.apply_promotions
   end
 
   def total_price
