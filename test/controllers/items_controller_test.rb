@@ -28,7 +28,7 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
     assert_includes assigns(:cart).items, item
   end
 
-  test "should not add same item to cart twice" do
+  test "should increment quantity if item already in cart" do
     item = items(:tshirt_one)
     post add_to_cart_item_url(item)
     assert_redirected_to cart_url
@@ -40,8 +40,8 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to cart_url
     follow_redirect!
     assert_response :success
-    assert_equal "Item is already in the cart.", flash[:notice]
-    assert_equal 1, assigns(:cart).items.where(id: item.id).count
+    cart_item = assigns(:cart).cart_items.find_by(item_id: item.id)
+    assert_equal 2, cart_item.quantity
   end
 
   test "should remove item from cart" do

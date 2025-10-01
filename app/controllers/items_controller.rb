@@ -10,7 +10,8 @@ class ItemsController < ApplicationController
 
   def add_to_cart
     if @cart.items.include?(@item)
-      flash[:notice] = "Item is already in the cart."
+      cart_item = @cart.cart_items.find_by(item_id: @item.id)
+      cart_item.increment!(:quantity)
     else
       @cart.items << @item
     end
