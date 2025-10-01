@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+percentage:
+  name: Flat 15% Off
+  promo_type: 0
+  discount_type: 0
+  discount_value: 15
+  min_unit: nil
+  discount_quantity: nil
+
+fixed_amount:
+  name: $10 Off
+  promo_type: 1
+  discount_type: 1
+  discount_value: 10
+  min_unit: nil
+  discount_quantity: nil
+
+buy_2_get_1_free:
+  name: Buy 2 Get 1 Free
+  promo_type: 3
+  discount_type: 0
+  discount_value: 100
+  min_unit: 2
+  discount_quantity: 1
+
+buy_3_get_1_50_perc_off:
+  name: Buy 3 Get 1 50% off
+  promo_type: 3
+  discount_type: 0
+  discount_value: 50
+  min_unit: 3
+  discount_quantity: 1
