@@ -22,7 +22,6 @@ class Cart < ApplicationRecord
       end
     end
 
-    Rails.logger.info "endd"
     update(total_price: cart_items.sum(&:total_price_after_discount))
   end
 
