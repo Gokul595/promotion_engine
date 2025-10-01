@@ -16,6 +16,14 @@ fixed_amount:
   min_unit: nil
   discount_quantity: nil
 
+weight_threshold:
+  name: 20% Off on orders above 1KG
+  promo_type: 2
+  discount_type: 0
+  discount_value: 20
+  min_unit: 1000
+  discount_quantity: nil
+
 buy_2_get_1_free:
   name: Buy 2 Get 1 Free
   promo_type: 3

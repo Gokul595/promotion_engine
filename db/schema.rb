@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_01_212902) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_01_223726) do
   create_table "cart_items", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "cart_id", null: false
     t.bigint "item_id", null: false
@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_01_212902) do
     t.float "selling_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "weight_in_grams"
     t.index ["category_id"], name: "index_items_on_category_id"
   end
 

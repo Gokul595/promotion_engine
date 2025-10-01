@@ -6,6 +6,7 @@ tshirt_one:
   description: A classic white t-shirt made from 100% cotton. Perfect for casual wear and layering.
   actual_price: 20.0
   selling_price: 15.0
+  weight_in_grams: 400
 
 tshirt_two:
   category: t_shirt
@@ -13,6 +14,7 @@ tshirt_two:
   description: A classic black t-shirt made from 100% cotton. Perfect for casual wear and layering.
   actual_price: 20.0
   selling_price: 15.0
+  weight_in_grams: 400
 
 hoodie_one:
   category: hoodie
@@ -20,3 +22,4 @@ hoodie_one:
   description: A comfortable zip-up hoodie with a soft fleece lining. Ideal for cooler weather.
   actual_price: 50.0
   selling_price: 40.0
+  weight_in_grams: 700

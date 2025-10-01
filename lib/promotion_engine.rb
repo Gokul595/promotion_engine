@@ -18,6 +18,8 @@ class PromotionEngine
         apply_percentage_promotion(promotion, cart_items)
       when 'fixed_amount'
         apply_fixed_amount_promotion(promotion, cart_items)
+      when 'weight_threshold'
+        apply_weight_threshold_promotion(promotion, cart_items)
       when 'buy_x_get_y'
         apply_buy_x_get_y_promotion(promotion, cart_items)
       end
@@ -37,7 +39,7 @@ class PromotionEngine
   def apply_percentage_promotion(promotion, cart_items)
     cart_items.each do |cart_item|
       if valid_promotion?(promotion, cart_item)
-        discount = (cart_item.item.selling_price * cart_item.quantity) * (promotion.discount_value / 100.0)
+        discount = (cart_item.item.selling_price * cart_item.quantity) * (promotion.discount_value.to_f / 100.0)
 
         # Ensure highest discount is applied for each item
         cart_item.update(promotion_id: promotion.id, discount_value: discount) if discount > cart_item.discount_value
@@ -56,6 +58,21 @@ class PromotionEngine
     end
   end
 
+  def apply_weight_threshold_promotion(promotion, cart_items)
+    total_weight = cart_items.sum { |ci| ci.item.weight_in_grams.to_f * ci.quantity }
+
+    if total_weight >= promotion.min_unit
+      cart_items.each do |cart_item|
+        if valid_promotion?(promotion, cart_item)
+          discount = (cart_item.item.selling_price * cart_item.quantity) * (promotion.discount_value.to_f / 100.0)
+
+          # Ensure highest discount is applied for each item
+          cart_item.update(promotion_id: promotion.id, discount_value: discount) if discount > cart_item.discount_value
+        end
+      end
+    end
+  end
+
   def apply_buy_x_get_y_promotion(promotion, cart_items)
     eligible_cart_items = cart_items.select { |ci| valid_promotion?(promotion, ci) }
     total_eligible_quantity = eligible_cart_items.sum(&:quantity)
@@ -63,7 +80,7 @@ class PromotionEngine
     if total_eligible_quantity >= promotion.min_unit
       free_items_count = (total_eligible_quantity / (promotion.min_unit + promotion.discount_quantity)) * promotion.discount_quantity
 
-      # Sort eligible cart items by price to maximize discount
+      # Sort eligible cart items by price to apply discount for the lowest priced items first
       eligible_cart_items.sort_by! { |ci| ci.item.selling_price }
 
       eligible_cart_items.each do |cart_item|

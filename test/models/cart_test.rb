@@ -33,6 +33,22 @@ class CartTest < ActiveSupport::TestCase
     assert_equal expected_discount, cart_item.discount_value, "Fixed amount promotion not applied correctly"
   end
 
+  test "should apply weight threshold promotion correctly" do
+    cart = carts(:one)
+    item = items(:tshirt_one)
+    promotion = promotions(:weight_threshold)
+
+    Promotion.all.where.not(id: promotion.id).update_all(status: :inactive)
+
+    cart_item = cart.cart_items.find_by(item: item)
+    cart_item.update(quantity: 2) # Add 2 quantities
+
+    cart_item.reload
+    expected_discount = 6 # per item price is $15, 20% of 2 items is $6
+
+    assert_equal expected_discount, cart_item.discount_value, "Weight threshold promotion not applied correctly"
+  end
+
   test "should apply buy 2 get 1 promotion correctly" do
     cart = carts(:one)
     item = items(:tshirt_one)
