@@ -1,0 +1,5 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  items: [tshirt_one, hoodie_one]
+  total_price: 55.0

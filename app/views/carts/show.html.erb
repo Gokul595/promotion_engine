@@ -1,0 +1,36 @@
+<h1>Your Cart</h1>
+
+<% if @cart_items.any? %>
+  <table class="cart-table">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cart_items.each do |cart_item| %>
+        <tr>
+          <td><%= cart_item.item.name %></td>
+          <td><%= number_to_currency(cart_item.item.selling_price) %></td>
+          <td>
+            <%= button_to 'Remove', remove_from_cart_item_path(cart_item.item), method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="cart-total">
+    <strong>Total Amount: </strong> <%= number_to_currency(@cart.total_price) %>
+  </div>
+
+  <div class="cart-actions">
+    <%= link_to 'Continue Shopping', items_path, class: 'button' %>
+    <%= link_to 'Checkout', '#', class: 'button primary' %>
+  </div>
+<% else %>
+  <p>Your cart is empty.</p>
+  <%= link_to 'Start Shopping', items_path, class: 'button' %>
+<% end %>

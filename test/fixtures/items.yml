@@ -7,6 +7,13 @@ tshirt_one:
   actual_price: 20.0
   selling_price: 15.0
 
+tshirt_two:
+  category: t_shirt
+  name: Basic Black T-Shirt
+  description: A classic black t-shirt made from 100% cotton. Perfect for casual wear and layering.
+  actual_price: 20.0
+  selling_price: 15.0
+
 hoodie_one:
   category: hoodie
   name: Zip-Up Hoodie
