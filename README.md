@@ -1,24 +1,50 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+```markdown
+## Local Setup
 
-Things you may want to cover:
+### Prerequisites
+- Ruby (version 3.2.2)
+- Bundler
+- MySQL
+- Node.js and Yarn (for JavaScript dependencies)
+```
 
-* Ruby version
+### Steps
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd <repository-folder>
+   ```
 
-* System dependencies
+2. Install Ruby dependencies:
+   ```bash
+   bundle install
+   ```
 
-* Configuration
+3. Install JavaScript dependencies:
+   ```bash
+   yarn install
+   ```
 
-* Database creation
+4. Set up the database:
+   ```bash
+   rails db:create
+   rails db:migrate
+   rails db:seed
+   ```
+   
+5. Running tests:
+   ```bash
+   rake test
+   ```
 
-* Database initialization
+5. Start the Rails server:
+   ```bash
+   rails server
+   ```
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+6. Open the application in your browser:
+   ```
+   http://localhost:3000
+   ```
