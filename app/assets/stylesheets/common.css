@@ -10,3 +10,10 @@
 .margin {
     margin: 10px;
 }
+
+.nav-link {
+    text-decoration: none;
+    color: #333;
+    padding: 8px 16px;
+    display: inline-block;
+}

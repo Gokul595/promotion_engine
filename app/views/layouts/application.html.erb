@@ -18,6 +18,14 @@
   </head>
 
   <body>
+    <div class="nav-link">
+      <% if current_page?(controller: 'carts', action: 'show') %>
+        <%= button_to 'View Items', items_path, method: :get %>
+      <% else %>
+        <%= button_to 'View Cart', cart_path, method: :get %>
+      <% end %>
+    </div>
+
     <%= yield %>
   </body>
 </html>
