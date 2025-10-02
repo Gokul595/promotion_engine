@@ -31,6 +31,8 @@ class CartItemTest < ActiveSupport::TestCase
     initial_total = cart.total_price
     item = items(:tshirt_two)
 
+    Promotion.update_all(status: :inactive)
+
     CartItem.create(cart: cart, item: item)
     cart.reload
 
@@ -40,6 +42,9 @@ class CartItemTest < ActiveSupport::TestCase
   test "should update cart total price after removing cart item" do
     cart = carts(:one)
     item = items(:tshirt_two)
+
+    Promotion.update_all(status: :inactive)
+
     cart_item = CartItem.create(cart: cart, item: item)
     cart.reload
     initial_total = cart.total_price

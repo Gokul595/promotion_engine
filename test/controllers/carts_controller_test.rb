@@ -13,12 +13,13 @@ class CartsControllerTest < ActionController::TestCase
     assert_equal cart.items, assigns(:cart).items
   end
 
-  test "should not show cart with invalid ID" do
+  test "should reset cart session value with invalid ID" do
     cart = carts(:one)
     @controller.session[:cart_id] = 30
 
-    assert_raises(ActiveRecord::RecordNotFound) do
-      get(:show)
-    end
+    get(:show)
+
+    assert_response :success
+    assert_nil @controller.session[:cart_id]
   end
 end
