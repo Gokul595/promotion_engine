@@ -94,3 +94,4 @@
 - No option to manually apply or remove promotions; they are applied automatically based on the rules defined
 - No option to create or manage items, categories, or promotions via the UI; they are pre-seeded in the database
 - No option to update item quantities directly in the cart; quantities can only be changed by adding or removing items
+- Buy X Get Y promotion will get highest priority than other promotions
