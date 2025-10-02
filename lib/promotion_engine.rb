@@ -7,7 +7,7 @@ class PromotionEngine
   # This could involve checking the items in the cart against active promotions
   # and adding discounts accordingly.
   def apply_promotions
-    promotions = Promotion.active.includes(:items, :categories) # Fetch all active promotions
+    promotions = active_promotions
     cart_items = @cart.cart_items.includes(item: :category)
 
     cart_items.update_all(discount_value: 0) # Reset all discounts before reapplying
@@ -29,6 +29,12 @@ class PromotionEngine
   end
 
   private
+
+  # Fetch all active promotions
+  def active_promotions
+    Promotion.active.includes(:items, :categories)
+             .where("start_time <= :current_time AND (end_time IS NULL OR end_time >= :current_time)", current_time: Time.current)
+  end
 
   def valid_promotion?(promotion, cart_item)
     return true unless promotion.promotion_sources.present?

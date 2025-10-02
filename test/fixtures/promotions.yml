@@ -7,6 +7,7 @@ percentage:
   discount_value: 15
   min_unit: nil
   discount_quantity: nil
+  start_time: <%= 1.day.ago %>
 
 fixed_amount:
   name: $10 Off
@@ -15,6 +16,7 @@ fixed_amount:
   discount_value: 10
   min_unit: nil
   discount_quantity: nil
+  start_time: <%= 1.day.ago %>
 
 weight_threshold:
   name: 20% Off on orders above 1KG
@@ -23,6 +25,7 @@ weight_threshold:
   discount_value: 20
   min_unit: 1000
   discount_quantity: nil
+  start_time: <%= 1.day.ago %>
 
 buy_2_get_1_free:
   name: Buy 2 Get 1 Free
@@ -31,6 +34,7 @@ buy_2_get_1_free:
   discount_value: 100
   min_unit: 2
   discount_quantity: 1
+  start_time: <%= 1.day.ago %>
 
 buy_3_get_1_50_perc_off:
   name: Buy 3 Get 1 50% off
@@ -39,3 +43,4 @@ buy_3_get_1_50_perc_off:
   discount_value: 50
   min_unit: 3
   discount_quantity: 1
+  start_time: <%= 1.day.ago %>

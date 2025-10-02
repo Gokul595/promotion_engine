@@ -94,6 +94,36 @@ class CartTest < ActiveSupport::TestCase
     assert_equal 0, cart_item.discount_value, "Inactive promotion should not be applied"
   end
 
+  test "should not apply non started promotions" do
+    cart = carts(:one)
+    item = items(:tshirt_one)
+    promotion = promotions(:percentage)
+    promotion.update(start_time: 1.day.from_now)
+
+    Promotion.all.where.not(id: promotion.id).update_all(status: :inactive)
+
+    cart_item = cart.cart_items.find_by(item: item)
+    cart_item.update(quantity: 2) # Add 2 quantities of the item
+    cart_item.reload
+
+    assert_equal 0, cart_item.discount_value, "Non-started promotion should not be applied"
+  end
+
+  test "should not apply ended promotions" do
+    cart = carts(:one)
+    item = items(:tshirt_one)
+    promotion = promotions(:percentage)
+    promotion.update(end_time: 1.day.ago)
+
+    Promotion.all.where.not(id: promotion.id).update_all(status: :inactive)
+
+    cart_item = cart.cart_items.find_by(item: item)
+    cart_item.update(quantity: 2) # Add 2 quantities of the item
+    cart_item.reload
+
+    assert_equal 0, cart_item.discount_value, "Ended promotion should not be applied"
+  end
+
   test "should apply highest discount when multiple promotions are applicable" do
     cart = carts(:one)
     item = items(:tshirt_one)
