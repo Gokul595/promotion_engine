@@ -21,7 +21,7 @@
           <td><%= number_to_currency(cart_item.item.selling_price) %></td>
           <td><%= number_to_currency(cart_item.total_price) %></td>
           <td>
-            <% if cart_item.discount_value > 0 %>
+            <% if cart_item.promotion_id %>
               <%= number_to_currency(cart_item.discount_value) %> - <%= cart_item.promotion.name %>
             <% else %>
               N/A
@@ -54,5 +54,5 @@
   </div>
 <% else %>
   <p>Your cart is empty.</p>
-  <%= button_to 'Start Shopping', items_path, class: 'button' %>
+  <%= button_to 'Start Shopping', items_path, method: :get, class: 'button' %>
 <% end %>

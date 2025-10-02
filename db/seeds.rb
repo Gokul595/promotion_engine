@@ -86,10 +86,12 @@ end
 
 puts "Seeding Promotions"
 
-# Example: Flat $10 off on all items
+# Example: Flat $10 off on all items in the tshirt category
 flat_fee_promo = Promotion.find_or_create_by!(name: 'Flat $10 Off', promo_type: :fixed_amount) do |promo|
   promo.discount_type = :fixed_amount
   promo.discount_value = 10.00
+  promo.start_time = Time.current
+  promo.categories << tshirt_category
 end
 
 # Example: Flat 15% off on all items in the Jogger category
@@ -97,14 +99,16 @@ percentage_promo = Promotion.find_or_create_by!(name: 'Flat 15% Off', promo_type
   promo.discount_type = :percentage
   promo.discount_value = 15
   promo.categories << jogger_category
+  promo.start_time = Time.current
 end
 
-# Example: 10% off for orders over 5kg 
-weight_threshold_promo = Promotion.find_or_create_by!(name: '10% Off Over 5kg', promo_type: :weight_threshold) do |promo|
+# Example: 10% off for orders over 1kg
+weight_threshold_promo = Promotion.find_or_create_by!(name: '10% Off Over 1kg', promo_type: :weight_threshold) do |promo|
   promo.discount_type = :percentage
   promo.discount_value = 10
   promo.min_unit = 1000 # in grams
   promo.items = [white_tee, graphic_tee]
+  promo.start_time = Time.current
 end
 
 # Example: Buy 2 Get 1 Free
@@ -114,6 +118,7 @@ buy_x_get_y_promo = Promotion.find_or_create_by!(name: 'Buy 2 Get 1 Free', promo
   promo.discount_quantity = 1
   promo.min_unit = 2
   promo.categories = [hoodies_category]
+  promo.start_time = Time.current
 end
 
 # Example: Buy 2 Get 2 50% off
@@ -123,6 +128,7 @@ buy_x_get_y_percent_promo = Promotion.find_or_create_by!(name: 'Buy 2 Get 2 50% 
   promo.discount_quantity = 2
   promo.min_unit = 2
   promo.categories = [tshirt_category]
+  promo.start_time = Time.current
 end
 
 puts "Seeding completed."

@@ -10,7 +10,7 @@ class PromotionEngine
     promotions = active_promotions
     cart_items = @cart.cart_items.includes(item: :category)
 
-    cart_items.update_all(discount_value: 0) # Reset all discounts before reapplying
+    cart_items.update_all(promotion_id: nil, discount_value: 0) # Reset all discounts before reapplying
 
     promotions.each do |promotion|
       case promotion.promo_type
@@ -34,6 +34,7 @@ class PromotionEngine
   def active_promotions
     Promotion.active.includes(:items, :categories)
              .where("start_time <= :current_time AND (end_time IS NULL OR end_time >= :current_time)", current_time: Time.current)
+             .order(promo_type: :asc) # Ensure consistent order by giving buy x get y high priority
   end
 
   def valid_promotion?(promotion, cart_item)
@@ -82,23 +83,33 @@ class PromotionEngine
   def apply_buy_x_get_y_promotion(promotion, cart_items)
     eligible_cart_items = cart_items.select { |ci| valid_promotion?(promotion, ci) }
     total_eligible_quantity = eligible_cart_items.sum(&:quantity)
+    required_quantity = (promotion.min_unit + promotion.discount_quantity)
 
-    if total_eligible_quantity >= promotion.min_unit
-      free_items_count = (total_eligible_quantity / (promotion.min_unit + promotion.discount_quantity)) * promotion.discount_quantity
+    if total_eligible_quantity >= required_quantity
+      free_items_count = (total_eligible_quantity / (required_quantity)) * promotion.discount_quantity
 
       # Sort eligible cart items by price to apply discount for the lowest priced items first
-      eligible_cart_items.sort_by! { |ci| ci.item.selling_price }
+      eligible_cart_items.sort_by! { |ci| [ci.item.selling_price, -ci.quantity] }
+
+      # Total items that can have promotion applied
+      promotion_applicable_items_count = total_eligible_quantity - (total_eligible_quantity % required_quantity)
 
       eligible_cart_items.each do |cart_item|
-        break if free_items_count <= 0
+        if free_items_count <= 0 && promotion_applicable_items_count > 0
+          # remove any previous promotion from current promotion eligible items if any
+          # and set current promotion with 0 discount
+          cart_item.update(promotion_id: promotion.id, discount_value: 0)
 
-        discount_quantity = [cart_item.quantity, free_items_count].min
-        discount = (cart_item.item.selling_price * discount_quantity) * (promotion.discount_value.to_f / 100)
+          promotion_applicable_items_count -= cart_item.quantity
+        elsif free_items_count > 0
+          discount_quantity = [cart_item.quantity, free_items_count].min
+          discount = (cart_item.item.selling_price * discount_quantity) * (promotion.discount_value.to_f / 100)
 
-        # Ensure highest discount is applied for each item
-        cart_item.update(promotion_id: promotion.id, discount_value: discount) if discount > cart_item.discount_value
+          cart_item.update(promotion_id: promotion.id, discount_value: discount)
 
-        free_items_count -= discount_quantity
+          free_items_count -= discount_quantity
+          promotion_applicable_items_count -= discount_quantity
+        end
       end
     end
   end
