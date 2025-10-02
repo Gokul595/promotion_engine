@@ -1,6 +1,6 @@
 class CartsController < ApplicationController
   def show
     @cart = current_cart
-    @cart_items = @cart.cart_items.includes(:item) if @cart
+    @cart_items = @cart.cart_items.includes(:item, :promotion) if @cart
   end
 end

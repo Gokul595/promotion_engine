@@ -21,9 +21,40 @@
 }
 
 .cart-total {
-    text-align: left;
+    text-align: right;
     font-size: 1.2em;
     font-weight: bold;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.cart-total-before-discount {
+    text-align: right;
+    font-size: 1em;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.cart-total-discount {
+    text-align: right;
+    font-size: 1em;
+    color: #d9534f;
+    margin-bottom: 5px;
+}
+
+.cart-summary {
+    text-align: right;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 15px;
+    padding: 10px;
+}
+
+.cart-actions {
+    text-align: right;
+    margin-top: 20px;
+
+    button {
+        margin: 10px;
+    }
 }

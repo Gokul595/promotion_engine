@@ -36,15 +36,23 @@
     </tbody>
   </table>
 
-  <div class="cart-total">
-    <strong>Total Amount: </strong> <%= number_to_currency(@cart.total_price) %>
+  <div class="cart-summary">
+    <div class="cart-total-before-discount">
+      <strong>Total Amount: </strong> <%= number_to_currency(@cart.total_price_before_discount) %>
+    </div>
+    <div class="cart-total-discount">
+      <strong>Total Discount: </strong> <%= number_to_currency(@cart.total_discount) %>
+    </div>
+    <div class="cart-total">
+      <strong>Final Amount: </strong> <%= number_to_currency(@cart.total_price) %>
+    </div>
   </div>
 
   <div class="cart-actions">
-    <%= link_to 'Continue Shopping', items_path, class: 'button' %>
-    <%= link_to 'Checkout', '#', class: 'button primary' %>
+    <%= button_to 'Continue Shopping', items_path, class: 'button' %>
+    <%= button_to 'Checkout', '#', class: 'button primary' %>
   </div>
 <% else %>
   <p>Your cart is empty.</p>
-  <%= link_to 'Start Shopping', items_path, class: 'button' %>
+  <%= button_to 'Start Shopping', items_path, class: 'button' %>
 <% end %>
