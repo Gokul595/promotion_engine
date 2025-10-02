@@ -39,12 +39,12 @@
    rake test
    ```
 
-5. Start the Rails server:
+6. tart the Rails server:
    ```bash
    rails server
    ```
 
-6. Open the application in your browser:
+7. Open the application in your browser:
    ```
    http://localhost:3000
    ```
